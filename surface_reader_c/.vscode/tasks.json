@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build C Project (CMake)",
+        "type": "shell",
+        "command": "cmd",
+        "args": [
+          "/c", "cmake -S . -B build && cmake --build build"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
+  

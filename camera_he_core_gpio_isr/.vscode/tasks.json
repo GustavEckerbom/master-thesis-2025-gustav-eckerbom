@@ -1,0 +1,205 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cmsis-csolution.build",
+            "solution": "${command:cmsis-csolution.getSolutionPath}",
+            "rebuild": false,
+            "problemMatcher": [],
+            "label": "cmsis-csolution.build: Build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Clean all (including YML build files)",
+            "type": "shell",
+            "windows": {
+                "command": [
+                    "cbuild ${command:cmsis-csolution.getSolutionPath} --clean;",
+                    "rm -Force ./blinky/*.cbuild.yml;",
+                    "rm -Force ./hello/*.cbuild.yml;",
+                    "rm -Force ./hello_rtt/*.cbuild.yml;"
+                ]
+            },
+            "linux": {
+                "command": [
+                    "cbuild ${command:cmsis-csolution.getSolutionPath} --clean;",
+                    "rm -f ./blinky/*.cbuild.yml;",
+                    "rm -f ./hello/*.cbuild.yml;",
+                    "rm -f ./hello_rtt/*.cbuild.yml;"
+                ]
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "First time pack installation",
+            "type": "shell",
+            "command": [
+                "cpackget init https://www.keil.com/pack/index.pidx;",
+                "cpackget add https://github.com/ARM-software/CMSIS_6/releases/download/v6.0.0/ARM.CMSIS.6.0.0.pack;",
+                "cpackget add https://github.com/alifsemi/alif_ensemble-cmsis-dfp/releases/download/v1.3.0/AlifSemiconductor.Ensemble.1.3.0.pack;",
+                "cpackget list;",
+                "echo 'Pack installation has been completed'"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Prepare program with Security Toolkit (multicore)",
+            "type": "shell",
+            "command": [
+                "cp './out/HE_app/HE/debug/HE_app.bin' '${config:alif.setools.root}/build/images/alif-img-M55_HE.bin';",
+                "cp './out/HP_app/HP/debug/HP_app.bin' '${config:alif.setools.root}/build/images/alif-img-M55_HP.bin';",
+                
+                "cp './.alif/M55_HE_and_HP.json' '${config:alif.setools.root}/alif-img.json';"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Prepare program with Security Toolkit Cam Dev (multicore)",
+            "type": "shell",
+            "command": [
+                "cp './out/alife7-genx320-rev1/HE/debug/alife7-genx320-rev1.bin' '${config:alif.setools.root}/build/images/alif-img-M55_HE.bin';",
+                "cp './out/HP_app/HP/debug/HP_app.bin' '${config:alif.setools.root}/build/images/alif-img-M55_HP.bin';",
+                
+                "cp './.alif/M55_HE_and_HP.json' '${config:alif.setools.root}/alif-img.json';"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Program with Security Toolkit (multicore)",
+            "type": "shell",
+            "options": {
+                "cwd": "${config:alif.setools.root}"
+            },
+            "command": [
+                "./app-gen-toc -f alif-img.json;",
+                "./app-write-mram -p;",
+                "rm ./build/images/alif-img-M55_HE.bin;",
+                "rm ./build/images/alif-img-M55_HP.bin;",
+                "rm ./alif-img.json;"
+            ],
+            "problemMatcher": [],
+            "dependsOn": "Prepare program with Security Toolkit (multicore)"
+        },
+
+
+        {
+            "label": "Program with Security Toolkit Cam Dev (multicore)",
+            "type": "shell",
+            "options": {
+                "cwd": "${config:alif.setools.root}"
+            },
+            "command": [
+                "./app-gen-toc -f alif-img.json;",
+                "./app-write-mram -p;",
+                "rm ./build/images/alif-img-M55_HE.bin;",
+                "rm ./build/images/alif-img-M55_HP.bin;",
+                "rm ./alif-img.json;"
+            ],
+            "problemMatcher": [],
+            "dependsOn": "Prepare program with Security Toolkit Cam Dev (multicore)"
+        },
+
+        {
+            "label": "Prepare program with Security Toolkit",
+            "type": "shell",
+            "windows": {
+                "command": [
+                    // Locate the output binary file and copy it to app-release-exec\build\images
+                    "$outputElfFilename='${command:cmsis-csolution.getBinaryFile}';",
+                    "Write-Host \"[DEBUG] Source ELF: $outputElfFilename\";",
+                    "$outputBinFilename=${outputElfFilename}.Substring(0, $outputElfFilename.Length -3) + 'bin';",
+                    "Write-Host \"[DEBUG] Output BIN: $outputBinFilename\";",
+                    "cp \"$outputBinFilename\" '${config:alif.setools.root}/build/images/alif-img.bin';",
+                    "cp './.alif/${command:cmsis-csolution.getProcessorName}_cfg.json' '${config:alif.setools.root}/alif-img.json';"
+                ]
+            },
+            "linux": {
+                "command": [
+                    "outputElfFilename='${command:cmsis-csolution.getBinaryFile}';",
+                    "cp \"${outputElfFilename/%???/bin}\" '${config:alif.setools.root}/build/images/alif-img.bin';",
+                    "cp './.alif/${command:cmsis-csolution.getProcessorName}_cfg.json' '${config:alif.setools.root}/alif-img.json';"
+                ]
+            },
+            "problemMatcher": []
+        },
+
+        {
+            "label": "Program with Security Toolkit",
+            "type": "shell",
+            "options": {"cwd": "${config:alif.setools.root}"},
+            "command": [
+                "./app-gen-toc -f alif-img.json;",
+                "./app-write-mram -p;",
+                "rm ./build/images/alif-img.bin;",
+                "rm ./alif-img.json;"
+            ],
+            "problemMatcher": [],
+            "dependsOn": "Prepare program with Security Toolkit"
+        },
+
+        {
+            "label": "Program with Security Toolkit (select COM port)",
+            "type": "shell",
+            "options": {"cwd": "${config:alif.setools.root}"},
+            "command": [
+                "./app-gen-toc -f alif-img.json;",
+                "./app-write-mram -p -d;",
+                "rm ./build/images/alif-img.bin;",
+                "rm ./alif-img.json;"
+            ],
+            "problemMatcher": [],
+            "dependsOn": "Prepare program with Security Toolkit"
+        },
+
+        {
+            "label": "Program with Security Toolkit JTAG",
+            "type": "shell",
+            "options": {"cwd": "${config:alif.setools.root}"},
+            "command": [
+                "./app-gen-toc -f alif-img.json;",
+                "./app-write-mram -m jtag -p;",
+                "rm ./build/images/alif-img.bin;",
+                "rm ./alif-img.json;"
+            ],
+            "problemMatcher": [],
+            "dependsOn": "Prepare program with Security Toolkit"
+        },
+        
+        {
+            "label": "Update TOC with Security Toolkit",
+            "type": "shell",
+            "options": {"cwd": "${config:alif.setools.root}"},
+            "command": [
+                "./app-gen-toc -f alif-img.json;",
+                "./app-write-mram -S;",
+                "rm ./build/images/alif-img.bin;",
+                "rm ./alif-img.json;"
+            ],
+            "problemMatcher": [],
+            "dependsOn": "Prepare program with Security Toolkit"
+        },
+        {
+            "label": "Install debug stubs with Security Toolkit",
+            "type": "shell",
+            "options": {"cwd": "${config:alif.setools.root}"},
+            "command": [
+                "./app-gen-toc -f ./build/config/app-cpu-stubs.json;",
+                "./app-write-mram;",
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Install debug stubs with Security Toolkit (select COM port)",
+            "type": "shell",
+            "options": {"cwd": "${config:alif.setools.root}"},
+            "command": [
+                "./app-gen-toc -f ./build/config/app-cpu-stubs.json;",
+                "./app-write-mram -d;",
+            ],
+            "problemMatcher": []
+        }
+    ]
+}

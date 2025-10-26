@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\User\Documents\GitHub\MasterThesis\surface_reader_c\build\CMakeFiles\1dc7a26a6908c00b8ece4c54c5b95142\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{0F2C214B-57B4-3683-9015-721ABC08FDFC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

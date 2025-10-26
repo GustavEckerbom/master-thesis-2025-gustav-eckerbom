@@ -1,0 +1,34 @@
+{
+    "label": "Program with Security Toolkit",
+    "type": "shell",
+    "options": {"cwd": "${config:alif.setools.root}"},
+    "command": [
+        "./app-gen-toc -f alif-img.json;",
+        "./app-write-mram -p;",
+        "rm ./build/images/alif-img.bin;",
+        "rm ./alif-img.json;"
+    ],
+    "problemMatcher": [],
+    "dependsOn": "Prepare program with Security Toolkit"
+}
+
+{
+    "label": "Prepare program with Security Toolkit",
+    "type": "shell",
+    "windows": {
+        "command": [
+            // Locate the output binary file and copy it to app-release-exec\build\images
+            "$outputElfFilename='${command:cmsis-csolution.getBinaryFile}';",
+
+            "Write-Host \"[DEBUG] Source ELF: $outputElfFilename\";",
+            
+            "$outputBinFilename=${outputElfFilename}.Substring(0, $outputElfFilename.Length -3) + 'bin';",
+            
+            "Write-Host \"[DEBUG] Output BIN: $outputBinFilename\";",
+            // Copy bin file to app-release-exec\build\images with the name alif-img.bin
+            "cp \"$outputBinFilename\" '${config:alif.setools.root}/build/images/alif-img.bin';",
+            
+            // Copy the configuration file to the root app-release-exec root folder
+            "cp './.alif/${command:cmsis-csolution.getProcessorName}_cfg.json' '${config:alif.setools.root}/alif-img.json';"
+        ]
+    },

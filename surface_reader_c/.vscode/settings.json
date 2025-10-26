@@ -1,0 +1,12 @@
+{
+    "cmake.configureSettings": {
+      "CMAKE_TOOLCHAIN_FILE": "C:/Users/User/Documents/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    },
+    "files.associations": {
+      ".als.json": "jsonc",
+      "stdint.h": "c",
+      "stdio.h": "c",
+      "windows.h": "c"
+    }
+  }
+  

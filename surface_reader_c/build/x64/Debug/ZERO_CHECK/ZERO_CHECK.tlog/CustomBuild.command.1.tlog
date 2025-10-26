@@ -1,0 +1,10 @@
+^C:\USERS\USER\DOCUMENTS\GITHUB\MASTERTHESIS\SURFACE_READER_C\BUILD\CMAKEFILES\1DC7A26A6908C00B8ECE4C54C5B95142\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/User/Documents/GitHub/MasterThesis/surface_reader_c -BC:/Users/User/Documents/GitHub/MasterThesis/surface_reader_c/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/User/Documents/GitHub/MasterThesis/surface_reader_c/build/usb_event_viewer.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

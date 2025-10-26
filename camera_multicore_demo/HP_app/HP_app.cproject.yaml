@@ -1,0 +1,116 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.6.0/tools/projmgr/schemas/cproject.schema.json
+project:
+  groups:
+    - group: App
+      files:
+        - file: main.c
+        - file: ../libs/common_app_utils/demo/demo.c
+
+    - group: Common
+      files:
+        - file: ../libs/common_app_utils/hwsem/hwsem_wrapper.c
+        - file: ../libs/common_app_utils/lptimer/lptimer_wrapper.c
+        - file: ../libs/common_app_utils/utimer/utimer_wrapper.c
+    - group: Board
+      files:
+        - file: ../libs/board/ncs_custom_board_rev1/board_init.c
+    - group: USB
+      files:
+        - file: ../libs/common_app_utils/tinyusb_alif/usb_desc.c
+        - file: ../libs/common_app_utils/tinyusb_alif/msc_disk.c
+        - file: ../libs/common_app_utils/tinyusb_alif/tinyusb_wrapper.c
+    - group: Image
+      files:
+        - file: ../libs/common_app_utils/image/image_buffer.c
+        - file: ../libs/common_app_utils/event_preprocessing/event_preprocessing.c
+
+  layers:
+    - layer: ../libs/common_app_utils/tinyusb_alif/tinyusb_alif.clayer.yaml
+  output:
+    base-name: $Project$
+    type:
+      - elf
+      - bin
+
+  add-path:
+    - .
+    - ./include
+    - ../board/
+    - ../libs/board/ncs_custom_board_rev1/
+    - ../libs/board/
+    - ../libs/common_app_utils/logging
+    - ../libs/common_app_utils/fault_handler
+    - ../libs/common_app_utils/power_control
+    - ../libs/from-prophesee
+    - ../libs/from-prophesee/src
+    - ../libs/common_app_utils/tinyusb/src/class/vendor
+    - ../libs/common_app_utils/image/
+    - ../libs/common_app_utils/utimer
+    - ../libs/common_app_utils/hwsem
+    - ../libs/common_app_utils/lptimer
+    - ../libs/common_app_utils/demo
+    - ../libs/common_app_utils/event_preprocessing
+
+  define:
+    - TX_TIMER_PROCESS_IN_ISR
+
+  components:
+    # needed for Alif Ensemble support
+    - component: AlifSemiconductor::Device:Startup&C Startup
+    - component: ARM::CMSIS:CORE
+
+    # peripheral drivers & middleware, uncomment as needed
+    # - component: AlifSemiconductor::Device:SOC Peripherals:ADC
+    # - component: AlifSemiconductor::Device:SOC Peripherals:CAN-FD
+    # - component: AlifSemiconductor::Device:SOC Peripherals:CDC
+    # - component: AlifSemiconductor::Device:SOC Peripherals:CPI
+    # - component: AlifSemiconductor::Device:SOC Peripherals:CRC
+    # - component: AlifSemiconductor::Device:SOC Peripherals:DAC
+    - component: AlifSemiconductor::Device:SOC Peripherals:DMA
+    # - component: AlifSemiconductor::Device:SOC Peripherals:Ethernet MAC
+    - component: AlifSemiconductor::Device:SOC Peripherals:GPIO
+    # - component: AlifSemiconductor::Device:SOC Peripherals:HSCMP
+    - component: AlifSemiconductor::Device:SOC Peripherals:HWSEM
+    # - component: AlifSemiconductor::Device:SOC Peripherals:I2C
+    # - component: AlifSemiconductor::Device:SOC Peripherals:I2C_I3C
+    # - component: AlifSemiconductor::Device:SOC Peripherals:I2S
+    # - component: AlifSemiconductor::Device:SOC Peripherals:I3C
+    # - component: AlifSemiconductor::Device:SOC Peripherals:LPI2C
+    - component: AlifSemiconductor::Device:SOC Peripherals:LPTIMER
+    - component: AlifSemiconductor::Device:SOC Peripherals:MHU
+    # - component: AlifSemiconductor::Device:SOC Peripherals:MIPI CSI2
+    # - component: AlifSemiconductor::Device:SOC Peripherals:MIPI DSI
+    # - component: AlifSemiconductor::Device:SOC Peripherals:MRAM
+    # - component: AlifSemiconductor::Device:SOC Peripherals:OSPI
+    # - component: AlifSemiconductor::Device:SOC Peripherals:PDM
+    - component: AlifSemiconductor::Device:SOC Peripherals:PINCONF
+    - component: AlifSemiconductor::Device:Conductor Tool support
+    - component: AlifSemiconductor::Device:SE runtime Services:core&Source
+    - component: AlifSemiconductor::Device:SE runtime Services:Initialization
+        Helper&Source
+    - component: AlifSemiconductor::Device:SOC Peripherals:UTIMER
+    # - component: AlifSemiconductor::Device:SOC Peripherals:UTIMER
+    # - component: AlifSemiconductor::Device:SOC Peripherals:WDT
+
+    # - component: AlifSemiconductor::Device:OSPI FLASH XIP:core
+    # - component: AlifSemiconductor::Device:OSPI FLASH XIP:utility
+    # - component: AlifSemiconductor::Device:OSPI HYPERRAM XIP
+    #- component: AlifSemiconductor::Device:SE runtime Services:Initialization Helper&Source
+    #- component: AlifSemiconductor::Device:SE runtime Services:core&Source
+
+    # - component: AlifSemiconductor::BSP:External peripherals:CAMERA Sensor MT9M114
+    # - component: AlifSemiconductor::BSP:External peripherals:CAMERA Sensor ARX3A0
+    # - component: AlifSemiconductor::BSP:External peripherals:CAMERA Sensor AR0144
+    # - component: AlifSemiconductor::BSP:External peripherals:Ethernet PHY
+    # - component: AlifSemiconductor::BSP:External peripherals:GT911 Touch Controller
+    # - component: AlifSemiconductor::BSP:External peripherals:ILI9806E LCD panel
+    # - component: AlifSemiconductor::BSP:External peripherals:OSPI Flash ISSI
+    # - component: AlifSemiconductor::Device:Conductor Tool support
+    # - component: AlifSemiconductor::Device:Power Management
+    # - component: AlifSemiconductor::Device:Retarget IO:STDERR
+    # - component: AlifSemiconductor::Device:Retarget IO:STDIN
+    # - component: AlifSemiconductor::Device:Retarget IO:STDOUT
+
+    #- component: AlifSemiconductor::RTOS&AzureRTOS:Kernel:Core
+    #- component: AlifSemiconductor::RTOS&AzureRTOS:Kernel:GCC_Port
+    # - component: AlifSemiconductor::RTOS&AzureRTOS:Kernel:ARMClang_Port

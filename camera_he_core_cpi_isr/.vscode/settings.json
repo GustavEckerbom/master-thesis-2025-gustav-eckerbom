@@ -1,0 +1,59 @@
+{
+    "files.associations": {
+        "*.h": "c",
+        "cstring": "cpp",
+        "camera_capture.hpp": "c",
+        "*.rh": "cpp"
+    },
+
+    "cmake.configureOnOpen": false,
+
+    "cortex-debug.variableUseNaturalFormat": false,
+    "cmsis-csolution.actions": [
+        {
+            "path": "alif.csolution.yml",
+            "target": "HP",
+            "config": {
+                "run": "Program with Security Toolkit"
+            },
+            "projects": [
+                {
+                    "path": "alife7-genx320-rev1/alife7-genx320-rev1.cproject.yml",
+                    "config": {
+                        "run": "Program with Security Toolkit Cam Dev (multicore)"
+                    }
+                },
+                {
+                    "path": "HP_app/HP_app.cproject.yaml",
+                    "config": {
+                        "run": "Program with Security Toolkit Cam Dev (multicore)"
+                    }
+                }
+            ]
+        },
+        {
+            "path": "alif.csolution.yml",
+            "target": "HE",
+            "projects": [
+                {
+                    "path": "blinky/blinky.cproject.yml",
+                    "config": {
+                        "run": "Program with Security Toolkit"
+                    }
+                },
+                {
+                    "path": "hello/hello.cproject.yml",
+                    "config": {
+                        "run": "Program with Security Toolkit"
+                    }
+                }
+            ],
+            "config": {
+                "run": "Program with Security Toolkit"
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=c:\\Users\\User\\Documents\\GitHub\\MasterThesis\\Cam_Dev\\out\\driver_test\\HP\\debug"
+    ],
+}

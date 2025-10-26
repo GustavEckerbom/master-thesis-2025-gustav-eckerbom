@@ -1,0 +1,53 @@
+ *  Executing task: $outputElfFilename='c:\Users\User\Documents\GitHub\MasterThesis\Cam_Dev\out\hello\HP\debug\hello.elf'; Write-Host "[DEBUG] Source ELF: $outputElfFilename"; $outputBinFilename=${outputElfFilename}.Substring(0, $outputElfFilename.Length -3) + 'bin'; Write-Host "[DEBUG] Output BIN: $outputBinFilename"; cp "$outputBinFilename" 'C:/alif-se-tools/app-release-exec/build/images/alif-img.bin'; cp './.alif/M55_HP_cfg.json' 'C:/alif-se-tools/app-release-exec/alif-img.json'; 
+
+[DEBUG] Source ELF: c:\Users\User\Documents\GitHub\MasterThesis\Cam_Dev\out\hello\HP\debug\hello.elf
+[DEBUG] Output BIN: c:\Users\User\Documents\GitHub\MasterThesis\Cam_Dev\out\hello\HP\debug\hello.bin
+ *  Terminal will be reused by tasks, press any key to close it. 
+
+ *  Executing task: ./app-gen-toc -f alif-img.json; ./app-write-mram -m jtag -p; rm ./build/images/alif-img.bin; rm ./alif-img.json; 
+
+Generating APP Package with:
+Device Part# E7 (AE722F80F55D5LS) - 5.5 MRAM / 13.5 SRAM - Rev: B2
+- System MRAM Base Address: 0x80580000
+- APP MRAM Base Address: 0x80000000
+- APP MRAM Size: 5767168
+- Configuration file: alif-img.json
+- Output file: build/AppTocPackage.bin
+
+Generating Device Configuration for: app-device-config.json
+Calculating APP area...
+Creating Content Certificates...
+2025-01-28 15:27:30,713 - Content Certificate Generation Utility started (Logging to ../build/logs/SBContent.log)
+2025-01-28 15:27:30,955 - Content Certificate Generation Utility started (Logging to ../build/logs/SBContent.log)
+Creating APP TOC Package...
+Creating Signature...
+Binary File:  ../build/images/alif-img.bin
+2025-01-28 15:27:31,214 - Content Certificate Generation Utility started (Logging to ../build/logs/SBContent.log)
+Content Certificate File:  build/images/alif-img.bin.crt
+Signature File:  build/images/alif-img.bin.sign
+Adding ATOC...
+APP TOC Package size: 3856 bytes
+Creating Signature...
+Binary File:  ../build/AppTocPackage.bin
+2025-01-28 15:27:31,496 - Content Certificate Generation Utility started (Logging to ../build/logs/SBContent.log)
+Content Certificate File:  build/AppTocPackage.bin.crt
+Signature File:  build/AppTocPackage.bin.sign
+Done!
+Writing MRAM with parameters:
+Device Part# E7 (AE722F80F55D5LS) - 5.5 MRAM / 13.5 SRAM - Rev: B2
+- Available MRAM: 5767168 bytes
+[INFO] Burning: ../build/images/alif-img.bin 0x80200000 ../build/AppTocPackage.bin 0x8057f0f0
+J-Link SN: 801047741
+SEGGER J-Link (unknown)
+about to connect to M0+..
+File name: build/images/alif-img.bin
+File Size is : 69712 bytes
+MRAM starting address: 0x80200000
+Writing the file to MRAM...
+Done in 0:00:01.407187
+File name: build/AppTocPackage.bin
+File Size is : 3856 bytes
+MRAM starting address: 0x8057f0f0
+Writing the file to MRAM...
+Done in 0:00:00.079849
+ *  Terminal will be reused by tasks, press any key to close it. 

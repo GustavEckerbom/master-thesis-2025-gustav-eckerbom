@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/tools/projmgr/2.3.0/tools/projmgr/schemas/clayer.schema.json
+layer:
+  description: TinyUSB with Alif Ensemble compatibility layer
+
+  define:
+    - CFG_TUSB_MCU: OPT_MCU_NONE
+    - CFG_TUSB_RHPORT0_MODE: OPT_MODE_DEVICE
+    - TUP_DCD_ENDPOINT_MAX: 8
+    - TUD_OPT_RHPORT: 0
+
+  groups:
+    - group: TinyUSB Alif Port
+      files:
+      - file: tusb_alif_dcd.c
+
+    - group: TinyUSB (device only)
+      files:
+        - file: ../tinyusb/src/tusb.c
+        - file: ../tinyusb/src/common/tusb_fifo.c
+        - file: ../tinyusb/src/device/usbd.c
+        - file: ../tinyusb/src/device/usbd_control.c
+        - file: ../tinyusb/src/class/cdc/cdc_device.c
+        - file: ../tinyusb/src/class/msc/msc_device.c
+        - file: ../tinyusb/src/class/vendor/vendor_device.c
+        - file: ../tinyusb/hw/bsp/
+
+  add-path:
+    - ../tinyusb/src
+    - ../tinyusb/hw
+    - ../tinyusb_alif
